@@ -1,0 +1,20 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <name>Access system report converter for Fabware.</name>
+    <groupId>fabware</groupId>
+    <artifactId>ac.report.converter</artifactId>
+    <version>0.1</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+    </dependencies>
+    <dependency>
+        <groupId>org.jxls</groupId>
+        <artifactId>jxls-reader</artifactId>
+        <version>2.0.2</version>
+    </dependency>
+</project>
