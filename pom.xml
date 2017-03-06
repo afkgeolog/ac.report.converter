@@ -11,10 +11,15 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
         </dependency>
+        <dependency>
+            <groupId>org.jxls</groupId>
+            <artifactId>jxls-reader</artifactId>
+            <version>2.0.2</version>
+        </dependency>
     </dependencies>
-    <dependency>
-        <groupId>org.jxls</groupId>
-        <artifactId>jxls-reader</artifactId>
-        <version>2.0.2</version>
-    </dependency>
+
+    <build>
+        <sourceDirectory>app</sourceDirectory>
+        <testSourceDirectory>test</testSourceDirectory>
+    </build>
 </project>
