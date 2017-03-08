@@ -1,4 +1,4 @@
-package domain;
+package src.domain;
 
 import org.junit.Before;
 import org.junit.Test;

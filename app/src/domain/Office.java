@@ -1,4 +1,4 @@
-package domain;
+package src.domain;
 
 /**
  * Created by Vladyslav Dovhopol on 3/2/17.
@@ -11,6 +11,9 @@ public class Office {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
 
     @Override
     public boolean equals(Object obj) {

@@ -1,4 +1,4 @@
-package domain;
+package src.domain;
 
 import java.time.YearMonth;
 import java.time.temporal.ChronoField;
