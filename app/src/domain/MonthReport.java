@@ -20,6 +20,13 @@ public class MonthReport extends Report{
         this.yearMonth = yearMonth;
     }
 
+    public static MonthReport from(Action action) {
+        Employee employee = action.getEmployee();
+        YearMonth yearMonth = YearMonth.from(action.getTime());
+
+        return new MonthReport(employee, yearMonth);
+    }
+
     protected boolean isWithinDateRange(Action action) {
         YearMonth actionYearMonth = YearMonth.from(action.getTime());
         return actionYearMonth.equals(yearMonth);
