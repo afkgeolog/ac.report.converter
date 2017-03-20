@@ -27,6 +27,11 @@ public class Controller extends Application {
     public void start(Stage stage) {
         try {
             File xlsReport = new ReportReader().read();
+            if (xlsReport == null) {
+                //File hasn't been selected.
+                Platform.exit();
+                return;
+            }
             InputReportDto inputReportDto = new ReportParser().parse(xlsReport);
             Map<Employee, List<MonthReport>> reports = ReportsCompiler.compile(inputReportDto);
             new Writer().write(reports);
