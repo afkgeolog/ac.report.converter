@@ -63,4 +63,8 @@ public class DayReport extends Report {
     public Statistic getStatistic() {
         return super.getStatistic();
     }
+
+    public LocalDate getDate() {
+        return date;
+    }
 }

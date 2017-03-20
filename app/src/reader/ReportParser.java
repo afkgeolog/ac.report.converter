@@ -14,7 +14,6 @@ import java.io.FileInputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.StringTokenizer;
-import java.util.logging.Logger;
 
 /**
  * Created by Vladyslav Dovhopol on 3/8/17.
@@ -40,8 +39,6 @@ public final class ReportParser {
         IS_SUCCESSFUL,
         ACTION_DESCRIPTION
     }
-
-    private Logger logger = Logger.getGlobal();
 
     /**
      * Read report and parse data to {@link #reportDto}.
@@ -78,9 +75,7 @@ public final class ReportParser {
         }
         Employee employee = new Employee(Long.valueOf(unparsedId), name);
 
-        if (reportDto.employees.add(employee)) {
-            logger.info("Save employee : " + employee.getName());
-        }
+        reportDto.employees.add(employee);
         return employee;
     }
 
@@ -107,9 +102,7 @@ public final class ReportParser {
         officeName = officeName.substring(0, officeName.lastIndexOf("-"));
         Office office = new Office(officeName);
 
-        if (reportDto.offices.add(office)) {
-            logger.info("Save office: " + office.getName());
-        }
+        reportDto.offices.add(office);
         return office;
     }
 
@@ -120,6 +113,10 @@ public final class ReportParser {
      * @param row current row
      */
     private void readAction(Row row, Employee employee, Office office) throws Exception {
+        if (employee == null) {
+            //Employee without name and ID
+            return;
+        }
         boolean isSuccessfulAction = getCell(row, CellInfo.IS_SUCCESSFUL).getNumericCellValue() == 1;
         if (!isSuccessfulAction) {
             return;
@@ -127,34 +124,14 @@ public final class ReportParser {
         LocalDateTime actionTime = readActionTime(row);
         Action.Type type = readActionType(row);
 
-        if (employee == null) {
-            long cardNumber = (long) getCell(row, CellInfo.CARD_NUMBER).getNumericCellValue();
-            StringBuilder logBuilder = new StringBuilder();
-            logBuilder  .append("Employee without name ")
-                        .append(type.name().toLowerCase()).append(" ")
-                        .append(office.getName())
-                        .append(" at ").append(actionTime)
-                        .append(" using card №").append(cardNumber);
-            logger.info(logBuilder.toString());
-            return;
-        }
-
         Action action = new Action(employee, office, type, actionTime);
 
-        if (reportDto.actions.add(action)) {
-            StringBuilder logBuilder = new StringBuilder();
-            logBuilder  .append("Save action: ")
-                        .append(action.getEmployee().getName()).append(" ")
-                        .append(action.getType().name().toLowerCase()).append(" ")
-                        .append(action.getOffice().getName()).append(" at ")
-                        .append(action.getTime());
-            logger.info(logBuilder.toString());
-        }
+        reportDto.actions.add(action);
     }
 
     private LocalDateTime readActionTime(Row row) {
         String timeString = getCell(row, CellInfo.ACTION_TIME).getStringCellValue();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss eeee");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss eeee");
         return  LocalDateTime.parse(timeString, formatter);
     }
 

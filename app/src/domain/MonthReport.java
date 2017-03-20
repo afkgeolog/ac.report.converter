@@ -1,8 +1,10 @@
 package src.domain;
 
+import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.temporal.ChronoField;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -37,13 +39,14 @@ public class MonthReport extends Report{
         if (actions.size() == 0) {
             return;
         }
-        WeekReport weekReport =
-                new WeekReport(employee, actions.get(0).getTime().toLocalDate().with(ChronoField.DAY_OF_WEEK, 1));
+        LocalDate startOfWeek = actions.get(0).getTime().toLocalDate().with(ChronoField.DAY_OF_WEEK, 1);
+        WeekReport weekReport = new WeekReport(employee, startOfWeek, yearMonth.getMonth());
         for (Action action : actions) {
             if (!weekReport.add(action)) {
                 weekReport.compose();
                 weekReports.add(weekReport);
-                weekReport = new WeekReport(employee, action.getTime().toLocalDate().with(ChronoField.DAY_OF_WEEK, 1));
+                startOfWeek = action.getTime().toLocalDate().with(ChronoField.DAY_OF_WEEK, 1);
+                weekReport = new WeekReport(employee, startOfWeek, yearMonth.getMonth());
             }
         }
         weekReport.compose();
@@ -52,5 +55,9 @@ public class MonthReport extends Report{
 
     public YearMonth getYearMonth() {
         return yearMonth;
+    }
+
+    public List<WeekReport> getWeekReports() {
+        return Collections.unmodifiableList(weekReports);
     }
 }

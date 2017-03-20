@@ -3,10 +3,7 @@ package src.domain;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.time.temporal.ChronoField;
 
 import static org.junit.Assert.*;
@@ -22,12 +19,23 @@ public class WeekReportTest {
 
     @Before
     public void setUp() {
-        report = new WeekReport(TestData.employee, TestData.startOfWeek);
+        report = new WeekReport(TestData.employee, TestData.startOfWeek, LocalDate.now().getMonth());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void createWeekReport_StartDateNotMonday_Exception() {
-        new WeekReport(TestData.employee, LocalDate.of(2016, 1, 1));
+        new WeekReport(TestData.employee, LocalDate.of(2016, 1, 1), Month.JANUARY);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void createWeekReport_MonthIncorrect_Exception() {
+        new WeekReport(TestData.employee, LocalDate.of(2016, 2, 29), Month.JANUARY);
+    }
+
+    @Test
+    public void createWeekReports_MonthesCorrect_NoException() {
+        new WeekReport(TestData.employee, LocalDate.of(2016, 2, 29), Month.FEBRUARY);
+        new WeekReport(TestData.employee, LocalDate.of(2016, 2, 29), Month.MARCH);
     }
 
     @Test
@@ -97,5 +105,33 @@ public class WeekReportTest {
         assertEquals(Duration.ofMinutes(55), statistic.getTimeInTeleports());
         assertEquals(1, statistic.getNumberOfTeleportsOnArrival());
         assertEquals(0, statistic.getNumberOfTeleportsOnLeaving());
+    }
+
+    @Test
+    public void getNumberOfWeek_FirstWeekOfJanuary2016_One() {
+        //January 2016 started on Friday.
+        WeekReport report = new WeekReport(TestData.employee, LocalDate.of(2015, 12, 28), Month.JANUARY);
+        assertEquals(1, report.getNumberOfWeekInMonth());
+    }
+
+    @Test
+    public void getNumberOfWeek_SecondWeekOfJanuary2016_Two() {
+        //January 2016 started on Friday.
+        WeekReport report = new WeekReport(TestData.employee, LocalDate.of(2016, 1, 4), Month.JANUARY);
+        assertEquals(2, report.getNumberOfWeekInMonth());
+    }
+
+    @Test
+    public void getNumberOfWeek_FirstWeekOfFebruary2016_One() {
+        //February 2016 started on Monday.
+        WeekReport report = new WeekReport(TestData.employee, LocalDate.of(2016, 2, 1), Month.FEBRUARY);
+        assertEquals(1, report.getNumberOfWeekInMonth());
+    }
+
+    @Test
+    public void getNumberOfWeek_LastWeekOfFebruary2016_Five() {
+        //February 2016 started on Monday.
+        WeekReport report = new WeekReport(TestData.employee, LocalDate.of(2016, 2, 29), Month.FEBRUARY);
+        assertEquals(5, report.getNumberOfWeekInMonth());
     }
 }

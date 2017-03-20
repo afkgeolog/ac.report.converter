@@ -5,10 +5,16 @@ import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import org.apache.commons.lang.exception.ExceptionUtils;
+import src.domain.Employee;
+import src.domain.MonthReport;
+import src.reader.InputReportDto;
 import src.reader.ReportParser;
 import src.reader.ReportReader;
+import src.writer.Writer;
 
 import java.io.File;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -21,7 +27,9 @@ public class Controller extends Application {
     public void start(Stage stage) {
         try {
             File xlsReport = new ReportReader().read();
-            new ReportParser().parse(xlsReport);
+            InputReportDto inputReportDto = new ReportParser().parse(xlsReport);
+            Map<Employee, List<MonthReport>> reports = ReportsCompiler.compile(inputReportDto);
+            new Writer().write(reports);
             //Delete log files if no exception has occured.
             LOGGING_CONFIGS.deleteLogFilesOnExit();
         } catch (Exception e) {
