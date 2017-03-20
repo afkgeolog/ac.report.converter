@@ -17,8 +17,7 @@ abstract class StatisticRowWriter extends RowWriter {
         writeLeavingTime(statistic);
         writeTimeAtWork(statistic);
         writeTimeInTeleports(statistic);
-        writeTeleportsOnArrival(statistic);
-        writeTeleportsOnLeaving(statistic);
+        writeTeleports(statistic);
     }
 
     private void writeArrivalTime(Statistic statistic) {
@@ -41,13 +40,8 @@ abstract class StatisticRowWriter extends RowWriter {
         write(Cells.TIME_IN_TELEPORTS, formattedTimeInTeleports);
     }
 
-    private void writeTeleportsOnArrival(Statistic statistic) {
-        String teleportsOnArrival = String.valueOf(statistic.getNumberOfTeleportsOnArrival());
-        write(Cells.TELEPORTS_ON_ARRIVAL, teleportsOnArrival);
-    }
-
-    private void writeTeleportsOnLeaving(Statistic statistic) {
-        String teleportsOnLeaving = String.valueOf(statistic.getNumberOfTeleportsOnLeaving());
-        write(Cells.TELEPORTS_ON_LEAVING, teleportsOnLeaving);
+    private void writeTeleports(Statistic statistic) {
+        String formattedTeleports = String.valueOf(statistic.getTeleports());
+        write(Cells.TELEPORTS, formattedTeleports);
     }
 }

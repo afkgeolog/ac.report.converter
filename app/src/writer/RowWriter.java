@@ -23,8 +23,7 @@ abstract class RowWriter {
         LEAVING_TIME,
         TIME_AT_WORK,
         TIME_IN_TELEPORTS,
-        TELEPORTS_ON_ARRIVAL,
-        TELEPORTS_ON_LEAVING
+        TELEPORTS
     }
 
     protected Cell write(Cells cellsEnum, String value) {

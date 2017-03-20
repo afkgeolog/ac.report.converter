@@ -59,8 +59,7 @@ class WeekReportWriter {
             write(Cells.LEAVING_TIME, "Leaving time");
             write(Cells.TIME_AT_WORK, "Time at work");
             write(Cells.TIME_IN_TELEPORTS, "Time in teleports");
-            write(Cells.TELEPORTS_ON_ARRIVAL, "Teleports on arrival");
-            write(Cells.TELEPORTS_ON_LEAVING, "Teleports on leaving");
+            write(Cells.TELEPORTS, "Teleports");
             applyFont();
         }
 
