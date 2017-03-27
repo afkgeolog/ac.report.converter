@@ -25,18 +25,19 @@ public class Controller extends Application {
     private static LoggingConfigs LOGGING_CONFIGS = LoggingConfigs.INSTANCE;
 
     public void start(Stage stage) {
+        //Delete log files if no exception has occured.
+        //Comment this line to debug deployed application.
+        LOGGING_CONFIGS.deleteLogFilesOnExit();
         try {
             File xlsReport = new ReportReader().read();
             if (xlsReport == null) {
-                //File hasn't been selected.
+                Logger.getGlobal().info("File hasn't been choosed.");
                 Platform.exit();
                 return;
             }
             InputReportDto inputReportDto = new ReportParser().parse(xlsReport);
             Map<Employee, List<MonthReport>> reports = ReportsCompiler.compile(inputReportDto);
             new Writer().write(reports);
-            //Delete log files if no exception has occured.
-            LOGGING_CONFIGS.deleteLogFilesOnExit();
         } catch (Exception e) {
             String stackTrace = ExceptionUtils.getFullStackTrace(e);
             Logger.getGlobal().severe(stackTrace);
@@ -49,7 +50,7 @@ public class Controller extends Application {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText(null);
-        alert.setContentText("See logs for details.");
+        alert.setContentText("Please, contact with developer.\nSend report that failed to be converted and I will fix program as soon as possible. =)");
 
         alert.showAndWait();
     }

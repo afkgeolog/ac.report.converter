@@ -5,6 +5,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import src.domain.Action;
 import src.domain.Employee;
 import src.domain.Office;
@@ -43,12 +44,12 @@ public final class ReportParser {
     /**
      * Read report and parse data to {@link #reportDto}.
      */
-    public synchronized InputReportDto parse(File xlsReport) throws Exception {
+    public synchronized InputReportDto parse(File excelReport) throws Exception {
         reportDto = new InputReportDto();
 
-        try(FileInputStream reportStream = new FileInputStream(xlsReport);
-            Workbook workbook = new HSSFWorkbook(reportStream)) {
-
+        try(FileInputStream reportStream = new FileInputStream(excelReport);
+            Workbook workbook = excelReport.getName().endsWith("xlsx") ? new XSSFWorkbook(reportStream) :
+                                                                         new HSSFWorkbook(reportStream)) {
             Sheet sheet = workbook.getSheetAt(0);
             for (Row row : sheet) {
                 if (row.getRowNum() == 0) {

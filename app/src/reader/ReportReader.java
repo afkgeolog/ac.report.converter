@@ -15,7 +15,7 @@ public class ReportReader {
      * @return Excel file that has been parse from file system. May be NULL.
      */
     public File read() {
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Excel files", "*.xls");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Excel files", "*.xls", "*.xlsx");
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(filter);

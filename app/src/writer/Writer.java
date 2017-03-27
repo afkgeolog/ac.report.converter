@@ -23,8 +23,13 @@ public class Writer {
      *    Name of each report is - year_month_employeeName.xls
      */
     public void write(Map<Employee, List<MonthReport>> reportsMap) throws FileSystemException {
+        File outputDirectory = new OutputDirectory().choose();
+        if (outputDirectory == null) {
+            Logger.getGlobal().info("Output directory hasn't been choosed.");
+            return;
+        }
         MonthReportWriter writer = new MonthReportWriter();
-        File reportsDirectory = createReportsDirectory();
+        File reportsDirectory = createReportsDirectory(outputDirectory);
         for(Employee employee : reportsMap.keySet()) {
             File employeeDirectory = createEmployeeDirectory(reportsDirectory, employee);
             //Don't set to parallel. Logging won't work correct.
@@ -39,8 +44,8 @@ public class Writer {
         }
     }
 
-    private File createReportsDirectory() throws FileSystemException {
-        File reportsDirectory = new File("./Reports");
+    private File createReportsDirectory(File outputDirectory) throws FileSystemException {
+        File reportsDirectory = new File(outputDirectory, "Reports");
         return createDirectoryIfNotExist(reportsDirectory);
     }
 
