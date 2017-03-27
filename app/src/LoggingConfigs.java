@@ -43,12 +43,7 @@ public class LoggingConfigs {
 
     public void deleteLogFilesOnExit() {
         File rootDirectory = new File(".");
-        FilenameFilter logFileFilter = new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return name.endsWith(LOG_FILE_SUFFIX);
-            }
-        };
+        FilenameFilter logFileFilter = (dir, name) -> name.endsWith(LOG_FILE_SUFFIX);
         File[] logFiles = rootDirectory.listFiles(logFileFilter);
         for (File logFile : logFiles) {
             logFile.deleteOnExit();
