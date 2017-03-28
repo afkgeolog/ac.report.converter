@@ -41,6 +41,10 @@ public class Statistic {
         return timeInTeleports;
     }
 
+    public Duration getTotalTime() {
+        return timeAtWork.plus(timeInTeleports);
+    }
+
     public LocalTime getArrivalTime() {
         return arrivalTime;
     }

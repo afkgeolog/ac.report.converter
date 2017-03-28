@@ -57,6 +57,7 @@ public class DayReportTest {
         assertEquals(1, statistic.getTeleports());
         assertEquals(Duration.ZERO, statistic.getTimeAtWork());
         assertEquals(Duration.ZERO, statistic.getTimeInTeleports());
+        assertEquals(Duration.ZERO, statistic.getTotalTime());
     }
 
     @Test
@@ -72,6 +73,7 @@ public class DayReportTest {
         assertEquals(2, statistic.getTeleports());
         assertEquals(Duration.ZERO, statistic.getTimeAtWork());
         assertEquals(Duration.ofHours(1), statistic.getTimeInTeleports());
+        assertEquals(Duration.ofHours(1), statistic.getTotalTime());
     }
 
     @Test
@@ -87,6 +89,7 @@ public class DayReportTest {
         assertEquals(2, statistic.getTeleports());
         assertEquals(Duration.ZERO, statistic.getTimeAtWork());
         assertEquals(Duration.ofHours(1), statistic.getTimeInTeleports());
+        assertEquals(Duration.ofHours(1), statistic.getTotalTime());
     }
 
     @Test
@@ -105,5 +108,6 @@ public class DayReportTest {
         assertEquals(0, statistic.getTeleports());
         assertEquals(Duration.ofHours(2), statistic.getTimeAtWork());
         assertEquals(Duration.ZERO, statistic.getTimeInTeleports());
+        assertEquals(Duration.ofHours(2), statistic.getTotalTime());
     }
 }

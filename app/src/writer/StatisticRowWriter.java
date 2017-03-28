@@ -17,6 +17,7 @@ abstract class StatisticRowWriter extends RowWriter {
         writeLeavingTime(statistic);
         writeTimeAtWork(statistic);
         writeTimeInTeleports(statistic);
+        writeTotalTime(statistic);
         writeTeleports(statistic);
     }
 
@@ -38,6 +39,11 @@ abstract class StatisticRowWriter extends RowWriter {
     private void writeTimeInTeleports(Statistic statistic) {
         String formattedTimeInTeleports = WriterUtils.formatDuration(statistic.getTimeInTeleports());
         write(Cells.TIME_IN_TELEPORTS, formattedTimeInTeleports);
+    }
+
+    private void writeTotalTime(Statistic statistic) {
+        String formattedTotalTime = WriterUtils.formatDuration(statistic.getTotalTime());
+        write(Cells.TOTAL_TIME, formattedTotalTime);
     }
 
     private void writeTeleports(Statistic statistic) {
