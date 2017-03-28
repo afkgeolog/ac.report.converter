@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.StringTokenizer;
 
 /**
@@ -132,7 +133,7 @@ public final class ReportParser {
 
     private LocalDateTime readActionTime(Row row) {
         String timeString = getCell(row, CellInfo.ACTION_TIME).getStringCellValue();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss eeee");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss eeee", Locale.ENGLISH);
         return  LocalDateTime.parse(timeString, formatter);
     }
 
